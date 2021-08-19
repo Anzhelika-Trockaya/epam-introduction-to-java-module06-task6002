@@ -77,13 +77,28 @@ public class NoteBookProcessor {
     }
 
     private void processAddingNote() {
-        String subject;
-        String email;
-        StringBuilder text = new StringBuilder();
         Note note;
 
         MenuShowerUtil.showTitleOfAddingNote();
 
+        try {
+            note = readNote();
+            notebook.addNote(note);
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Note not added! " + exception.getMessage());
+        }
+
+        MenuShowerUtil.showExtraMenuOfAddingNote();
+        input = scanner.nextLine();
+        if (input.equals("1")) {
+            processAddingNote();
+        }
+    }
+
+    private Note readNote(){
+        String subject;
+        String email;
+        StringBuilder text = new StringBuilder();
         System.out.println("Subject: ");
         subject = scanner.nextLine();
         System.out.println("Email: ");
@@ -96,19 +111,7 @@ public class NoteBookProcessor {
             text.append(input);
             input = scanner.nextLine();
         }
-
-        try {
-            note = new Note(subject, email, text.toString());
-            notebook.addNote(note);
-        } catch (IllegalArgumentException exception) {
-            System.out.println("Note not added! " + exception.getMessage());
-        }
-
-        MenuShowerUtil.showExtraMenuOfAddingNote();
-        input = scanner.nextLine();
-        if (input.equals("1")) {
-            processAddingNote();
-        }
+        return new Note(subject, email, text.toString());
     }
 
     private void processSearchingNotes() {
@@ -190,27 +193,11 @@ public class NoteBookProcessor {
     private ArrayList<Note> filterNotesByDateOfCreation(ArrayList<Note> notes) {
         LocalDate dateFrom;
         LocalDate dateTo;
-        String dateRegex = "(19([0-9][0-9])|20([0-9][0-9])-(" +
-                "((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01]))" +
-                "|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|3[0]))" +
-                "|((02)(-(0[1-9]|1[0-9]|2[0-8])))))" +
-                "|(([12][0-9]([02468][048]|[13579][26]))-(02)-(29))";
 
         System.out.print("Date of creation FROM (yyyy-mm-dd): ");
-        input = scanner.nextLine();
-
-        if (input.matches(dateRegex)) {
-            dateFrom = LocalDate.parse(input);
-        } else {
-            throw new IllegalArgumentException("Incorrect date!");
-        }
+        dateFrom = readDate();
         System.out.print("Date of creation TO (yyyy-mm-dd): ");
-        input = scanner.nextLine();
-        if (input.matches(dateRegex)) {
-            dateTo = LocalDate.parse(input);
-        } else {
-            throw new IllegalArgumentException("Incorrect date!");
-        }
+        dateTo = readDate();
 
         if (!dateFrom.isAfter(dateTo)) {
             notes = (ArrayList<Note>) notes.stream()
@@ -223,12 +210,26 @@ public class NoteBookProcessor {
         return notes;
     }
 
+    private LocalDate readDate() {
+        String dateRegex = "([12][0-9][0-9][0-9]-(" +
+                "((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01]))" +
+                "|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|3[0]))" +
+                "|((02)(-(0[1-9]|1[0-9]|2[0-8])))))" +
+                "|(([12][0-9]([02468][048]|[13579][26]))-(02)-(29))";
+        input = scanner.nextLine();
+        if (input.matches(dateRegex)) {
+            return LocalDate.parse(input);
+        } else {
+            throw new IllegalArgumentException("Incorrect date!");
+        }
+    }
+
     private ArrayList<Note> filterNotesByText(ArrayList<Note> notes) {
         System.out.print("Enter the word in the text or press \"enter\" to return: ");
         input = scanner.nextLine();
         if (!input.isEmpty()) {
             notes = (ArrayList<Note>) notes.stream()
-                    .filter((note) -> (note.getText().contains(input)))
+                    .filter((note) -> (note.getText().toLowerCase().contains(input.toLowerCase())))
                     .collect(Collectors.toList());
         } else {
             throw new IllegalArgumentException("The word cannot be an empty string!");
