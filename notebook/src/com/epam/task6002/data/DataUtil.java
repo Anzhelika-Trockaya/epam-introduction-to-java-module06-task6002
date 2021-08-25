@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataUtil {
-    private static final String fileName = "notebook/src/com/epam/task6002/data/notes.txt";
+    private static final String FILE_NAME = "notebook/src/com/epam/task6002/data/notes.txt";
 
     public static void loadData(ArrayList<Note> notes) throws IOException {
         String currentNoteString;
@@ -28,7 +28,7 @@ public class DataUtil {
                 "\\s}\\n?");
         Matcher matcher;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             while (reader.ready()) {
                 currentNoteString = reader.readLine();
                 if (currentNoteString.equals("\n")) {
@@ -74,7 +74,7 @@ public class DataUtil {
 
     public static void unloadData(ArrayList<Note> notes) throws IOException {
         String noteString;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Note note : notes) {
                 noteString = convertNoteToString(note);
                 writer.write(noteString);

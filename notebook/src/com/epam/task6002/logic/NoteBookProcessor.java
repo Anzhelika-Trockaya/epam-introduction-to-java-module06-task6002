@@ -10,10 +10,10 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class NoteBookProcessor {
-    private String input;
-    private boolean closeSelected;
     private final Scanner scanner;
     private final NoteBook notebook;
+    private String input;
+    private boolean closeSelected;
 
     public NoteBookProcessor(NoteBook notebook) {
         scanner = new Scanner(System.in);
@@ -36,7 +36,7 @@ public class NoteBookProcessor {
 
     private void processViewingNotes(String category, ArrayList<Note> notes, boolean createIndent) {
         if (createIndent) {
-            System.out.println(MenuShowerUtil.indent);
+            System.out.println(MenuShowerUtil.INDENT);
         }
         System.out.println("\n\n\n----------------------------   " + category + "   ----------------------------\n");
         if (!notes.isEmpty()) {
@@ -95,7 +95,7 @@ public class NoteBookProcessor {
         }
     }
 
-    private Note readNote(){
+    private Note readNote() {
         String subject;
         String email;
         StringBuilder text = new StringBuilder();

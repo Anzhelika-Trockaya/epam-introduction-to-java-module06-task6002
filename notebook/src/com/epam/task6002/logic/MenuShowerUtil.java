@@ -1,14 +1,17 @@
 package com.epam.task6002.logic;
 
 public class MenuShowerUtil {
-    static final String indent = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-    private static final String notebook = "------------------------------- NOTEBOOK -------------------------------";
-    private static final String addingNote = "------------------------------- ADDING NOTE -------------------------------";
-    private static final String searchingNote = "------------------------------ SEARCHING NOTE ------------------------------";
+    static final String INDENT = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    private static final String NOTEBOOK =
+            "------------------------------- NOTEBOOK -------------------------------";
+    private static final String ADDING_NOTE =
+            "------------------------------- ADDING NOTE -------------------------------";
+    private static final String SEARCHING_NOTE =
+            "------------------------------ SEARCHING NOTE ------------------------------";
 
 
     public static void showMainMenu() {
-        System.out.println(indent + notebook + "\n");
+        System.out.println(INDENT + NOTEBOOK + "\n");
         System.out.println(" \"Add\" - \"1\"");
         System.out.println(" \"View\" - \"2\"");
         System.out.println(" \"Search\" - \"3\"\n");
@@ -17,7 +20,7 @@ public class MenuShowerUtil {
     }
 
     public static void showTitleOfAddingNote() {
-        System.out.println(indent + addingNote);
+        System.out.println(INDENT + ADDING_NOTE);
     }
 
     public static void showExtraMenuOfAddingNote() {
@@ -27,7 +30,7 @@ public class MenuShowerUtil {
     }
 
     public static void showMenuOfSearchingNote() {
-        System.out.println(indent + searchingNote);
+        System.out.println(INDENT + SEARCHING_NOTE);
         System.out.println(" - Search options - ");
         System.out.println(" \"By id\" - \"1\"");
         System.out.println(" \"By subject\" - \"2\"");
