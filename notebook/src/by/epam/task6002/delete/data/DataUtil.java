@@ -1,6 +1,6 @@
-package com.epam.task6002.data;
+package by.epam.task6002.delete.data;
 
-import com.epam.task6002.model.Note;
+import by.epam.task6002.bean.Note;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -87,16 +87,10 @@ public class DataUtil {
         return "{ " +
                 "\"id\": " + note.getId() + ", " +
                 "\"dateOfCreation\": \"" + note.getDateOfCreation().toString() + "\", " +
-                "\"subject\": \"" + note.getSubject().replaceAll("\"", "\\\\\"")
-                .replaceAll("\\{", "\\\\{")
-                .replaceAll("}", "\\\\}")
+                "\"subject\": \"" + note.getSubject().replaceAll("}", "\\\\}")
                 + "\", " +
-                "\"email\": \"" + note.getEmail().replaceAll("\"", "\\\\\"")
-                .replaceAll("\\{", "\\\\{")
-                .replaceAll("}", "\\\\}") + "\", " +
-                "\"text\": \"" + note.getText().replaceAll("\"", "\\\\\"")
-                .replaceAll("\\{", "\\\\{")
-                .replaceAll("}", "\\\\}") + "\"" +
+                "\"email\": \"" + note.getEmail().replaceAll("}", "\\\\}") + "\", " +
+                "\"text\": \"" + note.getText().replaceAll("}", "\\\\}") + "\"" +
                 " }";
     }
 

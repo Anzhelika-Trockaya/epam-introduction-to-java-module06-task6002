@@ -1,25 +1,49 @@
-package com.epam.task6002.logic;
+package by.epam.task6002.delete;
 
-import com.epam.task6002.model.Note;
-import com.epam.task6002.model.NoteBook;
+import by.epam.task6002.bean.Note;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class NoteBookProcessor {
-    private final Scanner scanner;
-    private final NoteBook notebook;
     private String input;
     private boolean closeSelected;
+    String emailRegex = "^(([\\w\\d-_!#$%&'*+/=?^`{|}~]+" +
+            "(\\.[\\w\\d-_!#$%&'*+/=?^`{|}~]+)*" +
+            "(\\.\"([\\w\\d-_!#$%&'*+/=?^`{|}~(),:;<>@\\[\\] \\\\.]|(\\\\\"))+\"\\.)*)+|" +
+            "(\"([\\w\\d-_!#$%&'*+/=?^`{|}~(),:;<>@\\[\\] \\\\.]|(\\\\\"))+\"))" +
+            "@(\\w+(-\\w+)?\\.)+\\w{2,}$";
+// if (!dateOfCreation.isAfter(LocalDate.now()))      if (id > 0) {
+    //(subject.length() <= 75 || !subject.contains("\n"))
 
-    public NoteBookProcessor(NoteBook notebook) {
-        scanner = new Scanner(System.in);
-        this.closeSelected = false;
-        this.notebook = notebook;
+/*public void print() {
+        System.out.println(" - Note id:" + id + " - ");
+        System.out.println("Created: " + dateOfCreation);
+        System.out.println("Email: " + email);
+        System.out.println("Subject: " + subject);
+        formattedPrintText();
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
     }
+
+    private void formattedPrintText() {
+        Pattern pattern = Pattern.compile(".{1,74}(\\p{P}|\\s|\\n)");
+        Matcher matcher = pattern.matcher(text);
+        int start = 0;
+        while (matcher.find(start)) {
+            System.out.println(matcher.group());
+            start = matcher.end();
+        }
+    }
+
+
+
+
+
+
 
     public void start() {
         while (!closeSelected) {
@@ -34,7 +58,7 @@ public class NoteBookProcessor {
         }
     }
 
-    private void processViewingNotes(String category, ArrayList<Note> notes, boolean createIndent) {
+    private void processViewingNotes(String category, List<Note> notes, boolean createIndent) {
         if (createIndent) {
             System.out.println(MenuShowerUtil.INDENT);
         }
@@ -59,7 +83,7 @@ public class NoteBookProcessor {
 
     }
 
-    private void processSortingNotes(ArrayList<Note> notes) {
+    private void processSortingNotes(List<Note> notes) {
         MenuShowerUtil.showMenuOfSortingNote();
         input = scanner.nextLine();
         switch (input) {
@@ -115,7 +139,7 @@ public class NoteBookProcessor {
     }
 
     private void processSearchingNotes() {
-        ArrayList<Note> filteredNotes = notebook.getNotes();
+        List<Note> filteredNotes = notebook.getNotes();
         boolean inputEnded = false;
 
         MenuShowerUtil.showMenuOfSearchingNote();
@@ -145,7 +169,7 @@ public class NoteBookProcessor {
         }
     }
 
-    private ArrayList<Note> filterNotesById(ArrayList<Note> notes) {
+    private List<Note> filterNotesById(List<Note> notes) {
         String idString;
         long id;
         System.out.print("Enter id or \"0\" to return: ");
@@ -164,7 +188,7 @@ public class NoteBookProcessor {
         return notes;
     }
 
-    private ArrayList<Note> filterNotesBySubject(ArrayList<Note> notes) {
+    private List<Note> filterNotesBySubject(List<Note> notes) {
         System.out.print("Enter subject(part of subject) or press \"enter\" to return: ");
         input = scanner.nextLine();
         if (!input.isEmpty()) {
@@ -177,7 +201,7 @@ public class NoteBookProcessor {
         return notes;
     }
 
-    private ArrayList<Note> filterNotesByEmail(ArrayList<Note> notes) {
+    private List<Note> filterNotesByEmail(List<Note> notes) {
         System.out.print("Enter email(part of email) or press \"enter\" to return: ");
         input = scanner.nextLine();
         if (!input.isEmpty()) {
@@ -190,7 +214,7 @@ public class NoteBookProcessor {
         return notes;
     }
 
-    private ArrayList<Note> filterNotesByDateOfCreation(ArrayList<Note> notes) {
+    private List<Note> filterNotesByDateOfCreation(List<Note> notes) {
         LocalDate dateFrom;
         LocalDate dateTo;
 
@@ -200,7 +224,7 @@ public class NoteBookProcessor {
         dateTo = readDate();
 
         if (!dateFrom.isAfter(dateTo)) {
-            notes = (ArrayList<Note>) notes.stream()
+            notes = notes.stream()
                     .filter((note) -> (!note.getDateOfCreation().isAfter(dateTo)))
                     .filter((note) -> (!note.getDateOfCreation().isBefore(dateFrom)))
                     .collect(Collectors.toList());
@@ -224,16 +248,16 @@ public class NoteBookProcessor {
         }
     }
 
-    private ArrayList<Note> filterNotesByText(ArrayList<Note> notes) {
+    private List<Note> filterNotesByText(List<Note> notes) {
         System.out.print("Enter the word in the text or press \"enter\" to return: ");
         input = scanner.nextLine();
         if (!input.isEmpty()) {
-            notes = (ArrayList<Note>) notes.stream()
+            notes = notes.stream()
                     .filter((note) -> (note.getText().toLowerCase().contains(input.toLowerCase())))
                     .collect(Collectors.toList());
         } else {
             throw new IllegalArgumentException("The word cannot be an empty string!");
         }
         return notes;
-    }
+    }*/
 }

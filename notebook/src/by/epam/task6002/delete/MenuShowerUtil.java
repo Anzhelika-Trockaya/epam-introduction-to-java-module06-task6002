@@ -1,4 +1,4 @@
-package com.epam.task6002.logic;
+package by.epam.task6002.delete;
 
 public class MenuShowerUtil {
     static final String INDENT = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
