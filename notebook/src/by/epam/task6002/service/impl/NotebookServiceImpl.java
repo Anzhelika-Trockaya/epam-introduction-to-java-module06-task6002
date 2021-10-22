@@ -14,7 +14,6 @@ import java.util.List;
 
 public class NotebookServiceImpl implements NotebookService {
     private final DAOProvider daoProvider;
-    private final List<Note> allNotes=new ArrayList<>();
 
     public NotebookServiceImpl() {
         daoProvider = DAOProvider.getInstance();
@@ -22,14 +21,12 @@ public class NotebookServiceImpl implements NotebookService {
 
     @Override
     public void readAllNotes() throws ServiceException {
-        List<Note> notes;
         NotebookDAO notebookDAO;
 
         notebookDAO = daoProvider.getNotebookDAO();
 
         try {
-            allNotes.addAll(notebookDAO.getAllNotes());
-
+            notebookDAO.readAllNotes();
         } catch (DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -37,7 +34,28 @@ public class NotebookServiceImpl implements NotebookService {
 
     @Override
     public List<Note> getAllNotes() {
-        return allNotes;
+        NotebookDAO notebookDAO;
+
+        notebookDAO = daoProvider.getNotebookDAO();
+
+        return notebookDAO.getAllNotes();
+    }
+
+    @Override
+    public Note getNote(long id) {
+        NotebookDAO notebookDAO;
+        List<Note> allNotes;
+
+        notebookDAO = daoProvider.getNotebookDAO();
+        allNotes = notebookDAO.getAllNotes();
+
+        for (Note note : allNotes) {
+            if (id == note.getId()) {
+                return note;
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -47,7 +65,7 @@ public class NotebookServiceImpl implements NotebookService {
         notebookDAO = daoProvider.getNotebookDAO();
 
         try {
-            notebookDAO.writeNotes(notes);
+            notebookDAO.writeNotes();
         } catch (DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -55,12 +73,18 @@ public class NotebookServiceImpl implements NotebookService {
 
     @Override
     public void addNote(Note note) {
-        allNotes.add(note);
+        NotebookDAO notebookDAO;
+
+        notebookDAO = daoProvider.getNotebookDAO();
+        notebookDAO.addNote(note);
     }
 
     @Override
     public void removeNote(long id) {
-        allNotes.removeIf(note -> id == note.getId());
+        NotebookDAO notebookDAO;
+
+        notebookDAO = daoProvider.getNotebookDAO();
+        notebookDAO.removeNote(id);
     }
 
     @Override

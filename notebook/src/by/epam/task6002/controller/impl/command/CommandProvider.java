@@ -15,9 +15,11 @@ public class CommandProvider {
         commands.put("viewAllNotes", new ViewAllNotesCommand());
         commands.put("addNote", new AddNoteCommand());
         commands.put("removeNote", new RemoveNoteCommand());
-        commands.put("sortNotes", new SortNotesCommand());
+        commands.put("sortAllNotes", new SortAllNotesCommand());
+        commands.put("filterAndSortNotes", new FilterAndSortNotesCommand());
         commands.put("filterNotes", new FilterNotesCommand());
         commands.put("noCommand", new NoCommandCommand());
+        commands.put("saveData", new SaveDataCommand());
     }
 
     public static CommandProvider getInstance(){

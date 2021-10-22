@@ -1,6 +1,9 @@
 package by.epam.task6002.main;
 
-import by.epam.task6002.dao.DAOException;
+import by.epam.task6002.controller.Controller;
+import by.epam.task6002.controller.impl.NotebookController;
+import by.epam.task6002.main.menu.Menu;
+import by.epam.task6002.main.menu.MenuShowerUtil;
 
 /**
  * Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками
@@ -20,11 +23,22 @@ import by.epam.task6002.dao.DAOException;
  */
 public class Main {
 
-    public static void main(String[] args) throws DAOException {
-        try{
+    public static void main(String[] args) {
+        Controller notebookController;
+        UserInput userInput;
+        Menu menu;
 
-        } finally{
-            ///////////////write to file
+        userInput = new UserInput();
+        notebookController = new NotebookController();
+        menu = new Menu(userInput, notebookController);
+
+        try {
+            while (true) {
+                menu.startMainMenu();
+            }
+
+        } finally {
+            MenuShowerUtil.showMessage(notebookController.doAction("saveData"));
         }
     }
 }

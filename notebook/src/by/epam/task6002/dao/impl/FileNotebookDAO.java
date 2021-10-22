@@ -14,29 +14,33 @@ public class FileNotebookDAO implements NotebookDAO {
             .toString()
             .substring(6);
 
+    private final List<Note> allNotes = new ArrayList<>();
+
     @Override
-    public List<Note> getAllNotes() throws DAOException {
-        List<Note> allNotes;
+    public void readAllNotes() throws DAOException {
         String currentNoteString;
         NoteStringConverter noteStringConverter;
         Note currentNote;
 
-        allNotes = new ArrayList<>();
         noteStringConverter = new NoteStringConverter();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(booksFileName))) {
 
             while (reader.ready()) {
                 currentNoteString = readNotesString(reader);
+
                 currentNote = noteStringConverter.parseNote(currentNoteString);
                 allNotes.add(currentNote);
-
             }
 
         } catch (IOException ioException) {
             throw new DAOException(ioException);
         }
 
+    }
+
+    @Override
+    public List<Note> getAllNotes() {
         return allNotes;
     }
 
@@ -65,7 +69,7 @@ public class FileNotebookDAO implements NotebookDAO {
     }
 
     @Override
-    public void writeNotes(List<Note> notes) throws DAOException {
+    public void writeNotes() throws DAOException {
         NoteStringConverter noteStringConverter;
         String string;
         int i;
@@ -74,14 +78,14 @@ public class FileNotebookDAO implements NotebookDAO {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(booksFileName))) {
 
-            if(notes.size()>0){
-                i=0;
-                string = noteStringConverter.noteToString(notes.get(i));
+            if (allNotes.size() > 0) {
+                i = 0;
+                string = noteStringConverter.noteToString(allNotes.get(i));
                 writer.write(string);
             }
 
-            for (i=1; i<notes.size(); i++) {
-                string = noteStringConverter.noteToString(notes.get(i));
+            for (i = 1; i < allNotes.size(); i++) {
+                string = noteStringConverter.noteToString(allNotes.get(i));
                 writer.newLine();
                 writer.write(string);
             }
@@ -91,5 +95,15 @@ public class FileNotebookDAO implements NotebookDAO {
         } catch (IOException ioException) {
             throw new DAOException(ioException);
         }
+    }
+
+    @Override
+    public void addNote(Note note) {
+        allNotes.add(note);
+    }
+
+    @Override
+    public void removeNote(long id) {
+        allNotes.removeIf(note -> id == note.getId());
     }
 }

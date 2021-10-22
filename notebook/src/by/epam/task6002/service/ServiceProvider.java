@@ -9,9 +9,9 @@ public class ServiceProvider {
     private final IdService idService;
     private final NotebookService notebookService;
 
-    private ServiceProvider(){
-        idService=new IdServiceImpl();
-        notebookService=new NotebookServiceImpl();
+    private ServiceProvider() {
+        idService = new IdServiceImpl();
+        notebookService = new NotebookServiceImpl();
     }
 
     public static ServiceProvider getInstance() {

@@ -5,6 +5,13 @@ import by.epam.task6002.bean.Note;
 import java.util.List;
 
 public interface NotebookDAO {
-    List<Note> getAllNotes() throws DAOException;
-    void writeNotes(List<Note> notes) throws DAOException;
+    void readAllNotes() throws DAOException;
+
+    List<Note> getAllNotes();
+
+    void writeNotes() throws DAOException;
+
+    void addNote(Note note);
+
+    void removeNote(long id);
 }
